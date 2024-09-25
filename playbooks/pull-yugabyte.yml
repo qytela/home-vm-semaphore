@@ -1,0 +1,6 @@
+- name: Pull YugabyteDB from docker hub
+  hosts: all
+
+  tasks:
+    - name: Pull YugabyteDB from docker hub
+      shell: docker pull yugabytedb/yugabyte:2.23.0.0-b710
