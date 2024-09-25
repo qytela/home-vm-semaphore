@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  # uncomment this section and comment out the mysql section to use postgres instead of mysql
+  postgres:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: semaphore
+    volumes:
+      - semaphore-postgres:/var/lib/postgresql/data
+
+  semaphore:
+    image: semaphoreui/semaphore:latest
+    ports:
+      - 4000:3000
+    restart: unless-stopped
+    environment:
+      SEMAPHORE_DB_USER: postgres
+      SEMAPHORE_DB_PASS: postgres
+      SEMAPHORE_DB_HOST: postgres
+      SEMAPHORE_DB_PORT: 5432
+      SEMAPHORE_DB_DIALECT: postgres
+      SEMAPHORE_DB: semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: 123123Aa
+      SEMAPHORE_ADMIN_NAME: Qytela
+      SEMAPHORE_ADMIN_EMAIL: qytela@mail.com
+      SEMAPHORE_ADMIN: qytela
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      TZ: UTC
+    depends_on:
+      - postgres
+
+volumes:
+  semaphore-postgres:
