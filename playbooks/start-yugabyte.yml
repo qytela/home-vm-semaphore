@@ -1,0 +1,6 @@
+- name: Start yugabyte docker container
+  hosts: all
+
+  tasks:
+    - name: Start yugabyte docker container
+      shell: docker start yugabyte
