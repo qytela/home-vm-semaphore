@@ -4,3 +4,10 @@
   tasks:
     - name: Start yugabyte docker container
       shell: docker start yugabyte
+
+- name: Start pgbouncer
+  hosts: manager_1
+
+  tasks:
+    - name: Start pgbouncer
+      shell: docker start pgbouncer-pgbouncer-1
