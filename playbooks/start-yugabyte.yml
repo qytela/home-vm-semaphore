@@ -2,8 +2,14 @@
   hosts: all
 
   tasks:
+    - name: Stop yugabyte docker container
+      shell: docker stop yugabyte
+
     - name: Start yugabyte docker container
       shell: docker start yugabyte
+
+    - name: Restart yugabyte to reset vCPU usage
+      shell: docker restart yugabyte
 
 - name: Start pgbouncer
   hosts: manager_1
