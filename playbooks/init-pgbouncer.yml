@@ -1,0 +1,26 @@
+- name: Init pgbouncer configuration
+  hosts: all
+
+  tasks:
+    - name: Create pgbouncer folder
+      shell: mkdir -p /home/osboxes/pgbouncer
+
+    - name: Create pgbouncer.ini file
+      shell: |
+        cat << 'EFO' > /home/osboxes/pgbouncer/pgbouncer.ini
+        [databases]
+        * = host={{ ansible_host }} port=5433
+
+        [pgbouncer]
+        # Basic settings
+        listen_addr = 0.0.0.0
+        listen_port = 6432
+        auth_type = trust
+        auth_file = /etc/pgbouncer/userlist.txt
+
+        # Connection settings
+        pool_mode = session
+        max_client_conn = 900
+        default_pool_size = 150
+        min_pool_size = 10
+        EOF
