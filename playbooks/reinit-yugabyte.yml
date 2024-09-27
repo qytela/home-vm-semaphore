@@ -1,0 +1,39 @@
+- name: Re-init yugabyte docker container
+  hosts: all
+
+  tasks:
+    - name: Stop yugabyte docker container
+      shell: docker stop yugabyte
+
+    - name: Remove yugabyte docker container
+      shell: docker rm yugabyte
+
+- name: Re-init yugabyte docker container (primary)
+  hosts: manager_1
+
+  tasks:
+    - name: Start yugabyte docker container
+      shell: |
+        docker run -d --name yugabyte --network host --restart unless-stopped -p7000:7000 -p9000:9000 -p15433:15433 -p5433:5433 -p9042:9042 \
+          yugabytedb/yugabyte:2.23.0.0-b710 bin/yugabyted start \
+          --advertise_address={{ ansible_host }} \
+          --background=false
+
+    - name: Save manager_1 IP
+      add_host:
+        name: manager_1_ip
+        shared_variable: "{{ ansible_host }}"
+
+- name: Re-init yugabyte docker container (secondary)
+  hosts: worker_1,worker_2
+  vars:
+    manager_1_ip: "{{ hostvars['manager_1_ip']['shared_variable'] }}"
+
+  tasks:
+    - name: Start yugabyte docker container
+      shell: |
+        docker run -d --name yugabyte --network host --restart unless-stopped -p7000:7000 -p9000:9000 -p15433:15433 -p5433:5433 -p9042:9042 \
+          yugabytedb/yugabyte:2.23.0.0-b710 bin/yugabyted start \
+          --advertise_address={{ ansible_host }} \
+          --join={{ manager_1_ip }} \
+          --background=false
