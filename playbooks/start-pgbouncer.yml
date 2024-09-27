@@ -4,9 +4,11 @@
   tasks:
     - name: Stop pgbouncer docker container
       shell: docker stop pgbouncer
+      ignore_errors: true
 
     - name: Remove pgbouncer docker container
       shell: docker rm pgbouncer
+      ignore_errors: true
 
     - name: Start pgbouncer docker container
       shell: |
