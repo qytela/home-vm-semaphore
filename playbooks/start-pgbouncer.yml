@@ -13,5 +13,5 @@
         docker run --name pgbouncer --restart unless-stopped -d \
           -e DATABASE_URL="" \
           -p 6432:6432 \
-          -v /home/osboxes/pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini \
+          -v /home/osboxes/pgbouncer:/etc/pgbouncer \
           edoburu/pgbouncer

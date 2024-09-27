@@ -5,9 +5,15 @@
     - name: Create pgbouncer folder
       shell: mkdir -p /home/osboxes/pgbouncer
 
+    - name: Create userlist.txt file
+      shell: |
+        cat << 'EOF' > /home/osboxes/pgbouncer/userlist.txt
+        "yugabyte" ""
+        EOF
+
     - name: Create pgbouncer.ini file
       shell: |
-        cat << 'EFO' > /home/osboxes/pgbouncer/pgbouncer.ini
+        cat << 'EOF' > /home/osboxes/pgbouncer/pgbouncer.ini
         [databases]
         * = host={{ ansible_host }} port=5433
 
