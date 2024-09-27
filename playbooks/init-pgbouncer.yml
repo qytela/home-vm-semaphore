@@ -26,7 +26,7 @@
 
         # Connection settings
         pool_mode = session
-        max_client_conn = 900
-        default_pool_size = 150
+        max_client_conn = 240
+        default_pool_size = 20
         min_pool_size = 10
         EOF
