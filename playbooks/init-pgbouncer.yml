@@ -25,8 +25,8 @@
         auth_file = /etc/pgbouncer/userlist.txt
 
         # Connection settings
-        pool_mode = session
-        max_client_conn = 240
-        default_pool_size = 20
+        pool_mode = transaction
+        max_client_conn = 300
+        default_pool_size = 150
         min_pool_size = 10
         EOF
