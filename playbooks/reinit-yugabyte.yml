@@ -4,9 +4,11 @@
   tasks:
     - name: Stop yugabyte docker container
       shell: docker stop yugabyte
+      ignore_errors: true
 
     - name: Remove yugabyte docker container
       shell: docker rm yugabyte
+      ignore_errors: true
 
 - name: Re-init yugabyte docker container (primary)
   hosts: manager_1
